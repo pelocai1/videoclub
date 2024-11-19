@@ -1,5 +1,5 @@
 <?php
-include "Juego.php";
+require_once 'autoload.php';
 
 $miJuego = new Juego("The Last of Us Part II", 26, 49.99, "PS4", 1, 1); 
 echo "<strong>" . $miJuego->titulo . "</strong>"; 

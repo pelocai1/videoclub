@@ -1,4 +1,5 @@
 <?php
+namespace Dwes\ProyectoVideoclub;
 class Cliente{
     private $soportesAlquilados = [];
     private $numSoportesAlquilados = 0;
@@ -26,23 +27,22 @@ class Cliente{
         
         return false;
     }
-    public function alquilar($s): bool{
-        if($this->tieneAlquilado($s)){
-            echo "<br>El cliente ya tiene alquilado el soporte: ". $s->titulo."<br><br>";
-        }else {
-            
-                if ($this->getSoportesAlquilados()>=3) {
-                    echo "Este cliente tiene 3 elementos alquilados. No puede alquilar más en este videoclub hasta que no devuelva algo<br> <br>No se ha podido encontrar el soporte en los alquileres de este cliente<br><br>";
-                }else{
-                    $this->soportesAlquilados[] = $s;
-                    echo "Alquilado soporte a ". $this->nombre."<br><br>";
-                    $s->muestraResumen();
-                    $this->numSoportesAlquilados++;
-                    return true;
-                }
+    public function alquilar($s): Cliente {
+        if ($this->tieneAlquilado($s)) {
+            echo "<br>El cliente ya tiene alquilado el soporte: " . $s->titulo . "<br><br>";
+        } else {
+            if ($this->getSoportesAlquilados() >= 3) {
+                echo "Este cliente tiene 3 elementos alquilados. No puede alquilar más en este videoclub hasta que no devuelva algo<br> <br>No se ha podido encontrar el soporte en los alquileres de este cliente<br><br>";
+            } else {
+                $this->soportesAlquilados[] = $s;
+                echo "Alquilado soporte a " . $this->nombre . "<br><br>";
+                $s->muestraResumen();
+                $this->numSoportesAlquilados++;
+            }
         }
-        return false;
+        return $this; // Permite el encadenamiento
     }
+    
     public function devolver(int $numSoporte): bool{
         foreach ($this->soportesAlquilados as $key => $soporte) {
             if ($soporte->getNumero() == $numSoporte) {

@@ -1,9 +1,5 @@
 <?php
-include_once "juego.php";
-include_once "dvd.php";
-include_once "Soporte.php";
-include_once "cintaVideo.php";
-include_once "Cliente.php";
+namespace Dwes\ProyectoVideoclub;
 
 class Videoclub{
 
@@ -54,43 +50,16 @@ class Videoclub{
         }
     }
 
-    public function alquilaSocioProducto($numeroCliente, $numeroSoporte) {
-        // Buscar el cliente
-        $cliente = null;
-        foreach ($this->socios as $socio) {
-            if ($socio->getNumero() === $numeroCliente) {
-                $cliente = $socio;
-                break;
-            }
-        }
+    public function alquilaSocioProducto($numeroCliente, $numeroSoporte): Videoclub {
+        $cliente = $this->socios[$numeroCliente - 1] ?? null;
+        $producto = $this->productos[$numeroSoporte - 1] ?? null;
     
-        if ($cliente === null) {
-            echo "Cliente con número $numeroCliente no encontrado.<br>";
-            return false;
-        }
-    
-        // Buscar el soporte (producto)
-        $soporte = null;
-        foreach ($this->productos as $producto) {
-            if ($producto->getNumero() === $numeroSoporte) {
-                $soporte = $producto;
-                break;
-            }
-        }
-    
-        if ($soporte === null) {
-            echo "Soporte con número $numeroSoporte no encontrado.<br>";
-            return false;
-        }
-    
-        // Intentar alquilar el soporte al cliente
-        if ($cliente->alquilar($soporte)) {
-            echo "El cliente con número $numeroCliente ha alquilado el soporte $numeroSoporte exitosamente.<br>";
-            return true;
+        if ($cliente && $producto) {
+            $cliente->alquilar($producto);
         } else {
-            echo "No se pudo completar el alquiler para el cliente $numeroCliente.<br>";
-            return false;
+            echo "Cliente o producto no encontrado.<br>";
         }
+        return $this; // Permite el encadenamiento
     }
     
      

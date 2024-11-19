@@ -1,6 +1,6 @@
 <?php
 
-include_once("Soporte.php");
+namespace Dwes\ProyectoVideoclub;
 
 class Juego extends Soporte{
     public function __construct(string $titulo,int $numero,float $precio, public string $consola, private int $minNumJugadores,private int $maxNumJugadores){

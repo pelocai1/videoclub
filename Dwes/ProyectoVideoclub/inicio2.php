@@ -1,8 +1,5 @@
 <?php
-include_once "cintaVideo.php";
-include_once "dvd.php";
-include_once "juego.php";
-include_once "Cliente.php";
+require_once 'autoload.php';
 
 //instanciamos un par de objetos cliente
 $cliente1 = new Cliente("Bruce Wayne", 23);

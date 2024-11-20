@@ -1,4 +1,5 @@
 <?php
+namespace Dwes\ProyectoVideoclub;
 define("IVA", 1.21);
 abstract class Soporte implements Resumible   {
     

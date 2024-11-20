@@ -1,7 +1,7 @@
 <?php
-
+namespace Dwes\ProyectoVideoclub;
 class Videoclub{
-
+    
     private string $nombre;
     private array $productos = [];
     private int $numProductos = 0;
@@ -53,13 +53,33 @@ class Videoclub{
         $cliente = $this->socios[$numeroCliente - 1] ?? null;
         $producto = $this->productos[$numeroSoporte - 1] ?? null;
     
-        if ($cliente && $producto) {
-            $cliente->alquilar($producto);
-        } else {
-            echo "Cliente o producto no encontrado.<br>";
+        try {
+            if ($cliente && $producto) {
+                // Intentamos alquilar el producto
+                $cliente->alquilar($producto);
+                echo "Alquiler realizado con éxito. El cliente " . $cliente->nombre . " ha alquilado el producto: " . $producto->titulo . ".<br>";
+            } else {
+                echo "Cliente o producto no encontrado.<br>";
+            }
+        } catch (\Dwes\ProyectoVideoclub\Util\SoporteYaAlquiladoException $e) {
+            // Captura si el cliente ya ha alquilado este soporte
+            echo  $e->getMessage() . "<br>";
+        } catch (\Dwes\ProyectoVideoclub\Util\CupoSuperadoException $e) {
+            // Captura si el cliente ha alcanzado el límite de alquileres
+            echo $e->getMessage() . "<br>";
+        } catch (\Dwes\ProyectoVideoclub\Util\SoporteNoEncontradoException $e) {
+            // Captura si el producto no se encuentra en el videoclub
+            echo $e->getMessage() . "<br>";
+        } catch (\Dwes\ProyectoVideoclub\Util\ClienteNoEncontradoException $e) {
+            // Captura si el cliente no se encuentra en el sistema
+            echo $e->getMessage() . "<br>";
+        } catch (\Exception $e) {
+            // Captura cualquier otro tipo de excepción
+            echo  $e->getMessage() . "<br>";
         }
         return $this; // Permite el encadenamiento
     }
+    
     
      
 }

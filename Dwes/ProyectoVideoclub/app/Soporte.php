@@ -3,7 +3,7 @@ namespace Dwes\ProyectoVideoclub;
 define("IVA", 1.21);
 abstract class Soporte implements Resumible   {
     
-    public function __construct(public string $titulo,protected int $numero, private float $precio) {
+    public function __construct(public string $titulo,protected int $numero, private float $precio, public bool $alquilado = false) {
 
     }
     function getPrecio(): float {
